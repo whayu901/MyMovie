@@ -19,8 +19,8 @@ const MainStack = () => (
     />
 
     <Stack.Screen
-      name="Login"
-      component={Root}
+      name="Detail"
+      component={Detail}
       options={{ headerShown: false }}
     />
   </Stack.Navigator>

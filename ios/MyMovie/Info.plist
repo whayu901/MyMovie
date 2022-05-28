@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -55,6 +55,12 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>EBGaramond-Bold.ttf</string>
+		<string>EBGaramond-Regular.ttf</string>
+		<string>EBGaramond-SemiBold.ttf</string>
+		<string>SofiaPro-Bold.ttf</string>
+		<string>SofiaPro-Light.ttf</string>
+		<string>SofiaPro-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash</string>

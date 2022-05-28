@@ -14,7 +14,7 @@ export default function TabNavigator() {
       activeColor={COLORS.secondary}
       inactiveColor={COLORS.blackLighter}
       shifting
-      barStyle={{ backgroundColor: COLORS.white }}>
+      barStyle={{ backgroundColor: COLORS.blackLight }}>
       <Tab.Screen
         name="Home"
         component={Home}

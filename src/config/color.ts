@@ -6,6 +6,7 @@ const Colors = {
   black: "#020202",
   blackLight: "#121212",
   blackLighter: "#707070",
+  blackSection: "#8a8a8a",
 };
 
 export default Colors;
