@@ -1,7 +1,7 @@
 import React from "react";
 import { LogBox } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import { Provider as StoreProvider } from "react-redux";
+import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import Route from "./src/navigation";
@@ -15,13 +15,13 @@ LogBox.ignoreAllLogs(true);
 
 const App = () => {
   return (
-    <StoreProvider store={store}>
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <PaperProvider>
           <Route />
         </PaperProvider>
       </PersistGate>
-    </StoreProvider>
+    </Provider>
   );
 };
 

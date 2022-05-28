@@ -103,6 +103,7 @@ const Search = () => {
         <ActivityIndicator size={"large"} color={COLORS.yellow} />
       ) : (
         <FlatList
+          testID="flatlist-search"
           bounces={false}
           data={movieState?.searchMovie?.data}
           contentContainerStyle={{ paddingTop: 10 }}
