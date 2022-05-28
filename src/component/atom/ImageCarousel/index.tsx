@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, ImageBackground } from "react-native";
+import { Text, View, ImageBackground, TouchableOpacity } from "react-native";
 
 /**
  * ? Local Imports
@@ -25,6 +25,7 @@ interface Props {
   overlayBackgroundColor?: any;
   overlayBorderBottomLeftRadius?: any;
   overlayBorderBottomRightRadius?: any;
+  onPress?: () => void;
 }
 
 const ImagedCarouselCard = ({
@@ -36,6 +37,7 @@ const ImagedCarouselCard = ({
   textStyle,
   shadowColor,
   shadowStyle,
+  onPress,
   borderRadius,
   overlayHeight,
   shadowPaddingBottom,
@@ -44,28 +46,31 @@ const ImagedCarouselCard = ({
   overlayBorderBottomRightRadius,
 }: Props) => {
   return (
-    <ImageBackground
-      source={{ uri: source }}
-      borderRadius={15}
-      style={[
-        _backgroundStyle(width, height, shadowPaddingBottom),
-        shadowStyle || _shadowStyle(shadowColor),
-        style,
-      ]}>
-      <View
-        style={{
-          bottom: 0,
-          height: 50,
-          width,
-          position: "absolute",
-          justifyContent: "center",
-          borderBottomLeftRadius: 16,
-          borderBottomRightRadius: 16,
-          backgroundColor: "rgba(0,0,0,0.3)",
-        }}>
-        <Text style={textStyle || styles.textStyle}>{text}</Text>
-      </View>
-    </ImageBackground>
+    <TouchableOpacity activeOpacity={1} onPress={onPress}>
+      <ImageBackground
+        source={{ uri: source }}
+        borderRadius={15}
+        resizeMode="stretch"
+        style={[
+          _backgroundStyle(width, height, shadowPaddingBottom),
+          shadowStyle || _shadowStyle(shadowColor),
+          style,
+        ]}>
+        <View
+          style={{
+            bottom: 0,
+            height: 50,
+            width,
+            position: "absolute",
+            justifyContent: "center",
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
+            backgroundColor: "rgba(0,0,0,0.3)",
+          }}>
+          <Text style={textStyle || styles.textStyle}>{text}</Text>
+        </View>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 };
 

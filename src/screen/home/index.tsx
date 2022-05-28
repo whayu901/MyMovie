@@ -1,101 +1,127 @@
 import React from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
+import { Reducers } from "../../redux/types";
+import { getListMovieHome, getDetailMovie } from "../../redux/actions";
 import { ImageCarousel } from "../../component/atom";
-import { TYPHOGRAPHY, COLORS } from "../../config";
+import { ModalDetail } from "../../component/molecul";
+import { TYPHOGRAPHY, COLORS, API } from "../../config";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const movieState = useSelector((state: Reducers) => state.movie);
+  const [isModalDetail, setModalDetail] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    _getListMovie();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const _getDetailMovie = React.useCallback(
+    (value: number) => {
+      setModalDetail(true);
+      dispatch<any>(getDetailMovie({ id: value }));
+    },
+    [dispatch],
+  );
+
+  const _getListMovie = React.useCallback(() => {
+    if (movieState.listMovieHome.data.length === 0) {
+      dispatch<any>(getListMovieHome());
+    }
+  }, [dispatch, movieState.listMovieHome.data]);
+
+  const _renderItem = React.useCallback(
+    ({ item }: { item: any }) => (
+      <View style={{ marginHorizontal: 10 }}>
+        <ImageCarousel
+          width={250}
+          height={270}
+          onPress={() => {
+            _getDetailMovie(item?.id);
+          }}
+          text={item?.original_title}
+          shadowColor="#051934"
+          source={`${API.IMAGE_URL}${item?.poster_path}`}
+        />
+      </View>
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const _renderFooter = (value: any, title: string) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Detail", { type: value, title })}
+      style={{ width: 200, height: 250, justifyContent: "center" }}>
+      <Text
+        style={{
+          textAlign: "center",
+          ...TYPHOGRAPHY.regularBoldSofia,
+          color: COLORS.white,
+          textDecorationLine: "underline",
+        }}>
+        Lihat Semua
+      </Text>
+    </TouchableOpacity>
+  );
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blackLight }}>
-      <ScrollView>
-        <View>
-          <View
-            style={{ justifyContent: "space-between", flexDirection: "row" }}>
-            <Text
-              style={{
-                ...TYPHOGRAPHY.semiLargeBoldSofia,
-                color: COLORS.white,
-              }}>
-              Up coming Film
-            </Text>
-          </View>
-          <ImageCarousel
-            width={250}
-            height={250}
-            shadowColor="#051934"
-            source={
-              // eslint-disable-next-line max-len
-              "https://images.unsplash.com/photo-1471306224500-6d0d218be372?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            }
-          />
-        </View>
-
+      {movieState?.listMovieHome?.isLoading ? (
         <View style={{ marginTop: 20 }}>
-          <View
-            style={{ justifyContent: "space-between", flexDirection: "row" }}>
-            <Text
-              style={{
-                ...TYPHOGRAPHY.semiLargeBoldSofia,
-                color: COLORS.white,
-              }}>
-              Top rated Film
-            </Text>
-          </View>
-          <ImageCarousel
-            width={250}
-            height={150}
-            shadowColor="#051934"
-            source={
-              // eslint-disable-next-line max-len
-              "https://images.unsplash.com/photo-1471306224500-6d0d218be372?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            }
-          />
+          <ActivityIndicator size={"large"} color={COLORS.yellow} />
         </View>
+      ) : (
+        <ScrollView>
+          {movieState.listMovieHome.data.map((item: any, key: number) => (
+            <View key={key} style={{ marginHorizontal: 10 }}>
+              <View
+                style={{
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  marginVertical: 20,
+                }}>
+                <Text
+                  style={{
+                    ...TYPHOGRAPHY.semiLargeBoldSofia,
+                    color: COLORS.white,
+                  }}>
+                  {`${item?.name} Film`}
+                </Text>
+              </View>
+              <FlatList
+                nestedScrollEnabled
+                data={item?.results?.slice(0, 4)}
+                horizontal
+                maxToRenderPerBatch={4}
+                keyExtractor={(_, index) => String(index)}
+                renderItem={_renderItem}
+                ListFooterComponent={_renderFooter(item?.id, item?.name)}
+              />
+            </View>
+          ))}
+        </ScrollView>
+      )}
 
-        <View style={{ marginTop: 20 }}>
-          <View
-            style={{ justifyContent: "space-between", flexDirection: "row" }}>
-            <Text
-              style={{
-                ...TYPHOGRAPHY.semiLargeBoldSofia,
-                color: COLORS.white,
-              }}>
-              Popular Film
-            </Text>
-          </View>
-          <ImageCarousel
-            width={250}
-            height={150}
-            shadowColor="#051934"
-            source={
-              // eslint-disable-next-line max-len
-              "https://images.unsplash.com/photo-1471306224500-6d0d218be372?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            }
-          />
-        </View>
-
-        <View style={{ marginTop: 20 }}>
-          <View
-            style={{ justifyContent: "space-between", flexDirection: "row" }}>
-            <Text
-              style={{
-                ...TYPHOGRAPHY.semiLargeBoldSofia,
-                color: COLORS.white,
-              }}>
-              Now playing Film
-            </Text>
-          </View>
-          <ImageCarousel
-            width={250}
-            height={150}
-            shadowColor="#051934"
-            source={
-              // eslint-disable-next-line max-len
-              "https://images.unsplash.com/photo-1471306224500-6d0d218be372?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            }
-          />
-        </View>
-      </ScrollView>
+      {/* Modal Detail */}
+      <ModalDetail
+        isVisible={isModalDetail}
+        item={movieState?.detailMovie?.data}
+        isLoading={movieState?.detailMovie?.isLoading}
+        onBackdropPress={() => setModalDetail(false)}
+      />
     </SafeAreaView>
   );
 };

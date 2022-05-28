@@ -3,6 +3,7 @@ interface Payload {
   error?: any;
   id?: string;
   text?: string;
+  page?: number;
 }
 
 interface Params {
@@ -20,7 +21,7 @@ export interface Action {
 }
 
 export interface Reducers {
-  contact: MovieState;
+  movie: MovieState;
 }
 
 export interface MovieState {
@@ -32,13 +33,19 @@ export interface MovieState {
   };
   listMovieDetail: {
     data: any[];
-    dataTemp: any[];
+    dataTemp: any;
     isLoading: boolean;
     error: string;
+    moreLoading: boolean;
   };
   detailMovie: {
     isLoading: boolean;
     data: any;
+    error: string;
+  };
+  searchMovie: {
+    isLoading: boolean;
+    data: any[];
     error: string;
   };
 }

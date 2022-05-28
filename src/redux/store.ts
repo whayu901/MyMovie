@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import reducer from "./reducers";
 
 const persistConfig = {
-  key: "test1",
+  key: "test2",
   storage: AsyncStorage,
   whitelist: ["movie"],
 };
