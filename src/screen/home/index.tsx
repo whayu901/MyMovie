@@ -102,6 +102,7 @@ const Home = () => {
                 </Text>
               </View>
               <FlatList
+                testID="flatlist-home"
                 nestedScrollEnabled
                 data={item?.results?.slice(0, 4)}
                 horizontal

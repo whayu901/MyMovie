@@ -1,6 +1,6 @@
 import { Action, MovieState } from "../types";
 
-const initialState: MovieState = {
+export const initialState: MovieState = {
   listMovieHome: {
     data: [],
     dataTemp: [],

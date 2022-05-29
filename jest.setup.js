@@ -17,3 +17,11 @@ jest.mock("redux-persist", () => {
       .mockImplementation((config, reducers) => reducers),
   };
 });
+
+const mockNavigation = jest.fn();
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useNavigation: () => {
+    return mockNavigation;
+  },
+}));
