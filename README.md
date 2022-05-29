@@ -38,12 +38,12 @@ for ios:
 ```
 yarn ios
 
+
+```
+
 ### Unit Testing
 
 ```
-
 yarn test
-
-```
 
 ```
