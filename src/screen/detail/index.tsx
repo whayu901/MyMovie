@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Reducers } from "../../redux/types";
 import { getMovieByType, getDetailMovie } from "../../redux/actions";
-import { ImageCarousel, Loading } from "../../component/atom";
+import { ImageCarousel } from "../../component/atom";
 import { ModalDetail, Header } from "../../component/molecul";
 import { COLORS, API } from "../../config";
 
